@@ -1,0 +1,20 @@
+<svg width="104" height="131" viewBox="0 0 104 131" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_606_3270)">
+<g clip-path="url(#clip0_606_3270)">
+<path d="M4 4L54 54" stroke="white" stroke-width="7"/>
+<path d="M100 4L50 54" stroke="white" stroke-width="7"/>
+<path d="M4 54L54 104" stroke="white" stroke-width="7"/>
+<path d="M100 54L50 104" stroke="white" stroke-width="7"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_606_3270" x="0" y="0" width="104" height="135" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0" result="effect1_foregroundBlur_606_3270"/>
+</filter>
+<clipPath id="clip0_606_3270">
+<rect width="96" height="127" fill="white" transform="translate(4 4)"/>
+</clipPath>
+</defs>
+</svg>

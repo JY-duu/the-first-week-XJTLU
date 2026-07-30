@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TroGen - Art</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Noto+Serif+SC:wght@300;400;700;900&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #d68a8b;
+      --cream: #f5f1e8;
+      --ink: #050505;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--cream);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Noto Serif SC", SimSun, serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== 导航栏（与首页完全一致） ===== */
+    .navbar {
+      width: 100%;
+      max-width: 1260px;
+      margin: 37px auto 0;
+      height: 72px;
+      border-bottom: 1px solid rgba(0, 0, 0, .72);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      padding: 0 10px;
+    }
+
+    .brand {
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      font-size: 28px;
+      line-height: 28px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 62px;
+      align-items: center;
+      height: 34px;
+      font-size: 24px;
+      line-height: 34px;
+    }
+
+    .nav-link {
+      position: relative;
+      z-index: 0;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: -1;
+      width: 86px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(120, 120, 120, .22);
+      filter: blur(8px);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.75);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--pink);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ===== 内容容器 ===== */
+    .content-wrapper {
+      max-width: 1260px;
+      margin: 20px auto 80px;
+      padding: 0 10px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 50px;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: var(--ink);
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: var(--pink);
+      margin-top: 40px;
+      margin-bottom: 20px;
+      border-left: 3px solid var(--pink);
+      padding-left: 12px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: var(--ink);
+    }
+
+    p, li {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    ul {
+      padding-left: 25px;
+    }
+
+    .conclusion {
+      font-weight: bold;
+      color: var(--ink);
+      margin-top: 15px;
+    }
+
+    /* ===== 阅读进度指示器（与首页一致） ===== */
+    .progress-capsule {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 40px;
+      border-radius: 20px;
+      background: var(--pink);
+      cursor: default;
+      transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(214, 138, 139, 0.3);
+      overflow: hidden;
+    }
+
+    .progress-capsule:hover {
+      width: 80px;
+      height: 40px;
+      box-shadow: 0 4px 16px rgba(214, 138, 139, 0.4);
+    }
+
+    .progress-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      transition: height 0.15s linear;
+    }
+
+    .progress-text {
+      position: relative;
+      z-index: 1;
+      font-family: "Noto Serif SC", SimSun, serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .progress-capsule:hover .progress-text {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 15px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .brand {
+        font-size: 22px;
+      }
+      .nav-links {
+        gap: 20px;
+        font-size: 16px;
+        flex-wrap: wrap;
+      }
+      .content-wrapper {
+        padding: 0 15px;
+      }
+      .container {
+        padding: 25px;
+      }
+      .progress-capsule {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar" aria-label="TroGen navigation">
+  <div class="brand">第二组 · TroGen项目学习</div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">首页</a>
+    <a class="nav-link" href="wet.html">Wet</a>
+    <a class="nav-link" href="model.html">Model</a>
+    <a class="nav-link" href="art.html">Art</a>
+    <a class="nav-link" href="hp.html">HP</a>
+  </div>
+</nav>
+
+<!-- 完整内容 -->
+<div class="content-wrapper">
+  <div class="container">
+    <h1>Art &amp; Design</h1>
+
+    <h2>设计理念</h2>
+    <p>TroGen 项目不仅是一项科学研究，也是一次将复杂生物概念可视化的设计实践。我们的艺术与设计工作致力于用直观、美观的方式传达 TroGen 的核心理念——"Living inside. Fighting from within."。</p>
+
+    <h2>品牌视觉</h2>
+    <ul>
+      <li><strong>Logo 设计：</strong>TroGen 标志融合了细菌形态与特洛伊木马的隐喻，象征着工程菌作为智能载体潜入肿瘤内部。</li>
+      <li><strong>配色方案：</strong>主色调 #d68a8b（粉色）象征生命与活力，搭配米白底色 #f5f1e8，营造学术且温暖的视觉氛围。</li>
+      <li><strong>字体选用：</strong>采用 Noto Serif SC 与 ZCOOL QingKe HuangYou，兼顾学术感与设计感。</li>
+    </ul>
+
+    <h2>页面设计</h2>
+    <p>从首页的动态帧动画到内容页的清晰信息层级，我们力求在每个细节上保持一致的设计语言。卡片式滚动、渐入动画、生物胶囊风格的阅读指示器，均为用户带来沉浸式的浏览体验。</p>
+
+    <h2>科学可视化</h2>
+    <p>通过 3D 分子渲染、流程图解、信息图表等方式，将复杂的分子生物学机制转化为易于理解的视觉内容，帮助观众直观理解 TroGen 平台的工作原理。</p>
+
+    <h2>总结</h2>
+    <p class="conclusion">Art &amp; Design 让 TroGen 的故事更加生动可感，我们相信好的设计能拉近科学与公众之间的距离。</p>
+  </div>
+</div>
+
+<!-- 阅读进度指示器 -->
+<div class="progress-capsule" id="progressCapsule" aria-label="阅读进度">
+  <div class="progress-fill" id="progressFill"></div>
+  <span class="progress-text" id="progressText">0%</span>
+</div>
+
+<script>
+  (function() {
+    const fill = document.getElementById('progressFill');
+    const text = document.getElementById('progressText');
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) {
+        text.textContent = '100%';
+        fill.style.height = '100%';
+        return;
+      }
+      const percent = Math.min(Math.round((scrollTop / docHeight) * 100), 100);
+      text.textContent = percent + '%';
+      fill.style.height = percent + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();
+</script>
+
+</body>
+</html>

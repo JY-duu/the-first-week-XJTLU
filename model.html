@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TroGen - Model</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Noto+Serif+SC:wght@300;400;700;900&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #d68a8b;
+      --cream: #f5f1e8;
+      --ink: #050505;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--cream);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Noto Serif SC", SimSun, serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== 导航栏（与首页完全一致） ===== */
+    .navbar {
+      width: 100%;
+      max-width: 1260px;
+      margin: 37px auto 0;
+      height: 72px;
+      border-bottom: 1px solid rgba(0, 0, .72);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      padding: 0 10px;
+    }
+
+    .brand {
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      font-size: 28px;
+      line-height: 28px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 62px;
+      align-items: center;
+      height: 34px;
+      font-size: 24px;
+      line-height: 34px;
+    }
+
+    .nav-link {
+      position: relative;
+      z-index: 0;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: -1;
+      width: 86px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(120, 120, 120, .22);
+      filter: blur(8px);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.75);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--pink);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ===== 外层内容容器（承载两个独立卡片） ===== */
+    .content-wrapper {
+      max-width: 1260px;
+      margin: 20px auto 80px;
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 40px; /* 两个白色卡片上下间距 */
+    }
+
+    /* ===== 独立白色卡片容器（两个板块分开） ===== */
+    .card-container {
+      background: #fff;
+      padding: 50px;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: var(--ink);
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: var(--pink);
+      margin-top: 40px;
+      margin-bottom: 20px;
+      border-left: 3px solid var(--pink);
+      padding-left: 12px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: var(--ink);
+    }
+
+    h4 {
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      color: #444;
+    }
+
+    p, li {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    ul, ol {
+      padding-left: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    table th {
+      background: #f7f2ec;
+    }
+
+    .conclusion {
+      font-weight: bold;
+      color: var(--ink);
+      margin-top: 15px;
+    }
+
+    .img-single {
+      max-width: 90%;
+      border-radius: 6px;
+      margin: 20px auto;
+      display: block;
+    }
+    .img-desc {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin: -10px 0 20px;
+    }
+
+    /* ===== 阅读进度指示器（与首页一致） ===== */
+    .progress-capsule {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 40px;
+      border-radius: 20px;
+      background: var(--pink);
+      cursor: default;
+      transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(214, 138, 139, 0.3);
+      overflow: hidden;
+    }
+
+    .progress-capsule:hover {
+      width: 80px;
+      height: 40px;
+      box-shadow: 0 4px 16px rgba(214, 138, 139, 0.4);
+    }
+
+    .progress-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      transition: height 0.15s linear;
+    }
+
+    .progress-text {
+      position: relative;
+      z-index: 1;
+      font-family: "Noto Serif SC", SimSun, serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .progress-capsule:hover .progress-text {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 15px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .brand {
+        font-size: 22px;
+      }
+      .nav-links {
+        gap: 20px;
+        font-size: 16px;
+        flex-wrap: wrap;
+      }
+      .content-wrapper {
+        padding: 0 15px;
+      }
+      .card-container {
+        padding: 25px;
+      }
+      .progress-capsule {
+        bottom: 20px;
+        right: 20px;
+      }
+      table th, table td {
+        padding: 6px 3px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar" aria-label="TroGen navigation">
+  <div class="brand">第二组 · TroGen项目学习</div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">首页</a>
+    <a class="nav-link" href="wet.html">Wet</a>
+    <a class="nav-link" href="model.html">Model</a>
+    <a class="nav-link" href="art.html">Art</a>
+    <a class="nav-link" href="hp.html">HP</a>
+  </div>
+</nav>
+
+<!-- 外层内容容器，包含两个独立白色卡片 -->
+<div class="content-wrapper">
+  <!-- 板块一：独立白色卡片 Model1 FnBP侵袭蛋白筛选 -->
+  <div class="card-container">
+    <h1>Model1：FnBP侵袭蛋白高通量筛选模型</h1>
+ <h2>一、研究背景与作用原理</h2>
+    <h3>1.1 研究背景</h3>
+    <p>三阴性乳腺癌肿瘤微环境会特异性富集革兰氏阳性菌，胞内细菌可躲避常规抗生素杀伤，为细菌载体药物递送提供天然条件。</p>
+    <p>本研究底盘工程菌为表皮葡萄球菌、木糖葡萄球菌，菌株自身无天然FnBP，需外源导入侵袭蛋白提升肿瘤侵入能力。</p>
+    <p>纤连蛋白结合蛋白（FnBP）分布于葡萄球菌、链球菌表面，可介导细菌侵入肿瘤细胞；但FnBP同源蛋白数量多，纯湿实验筛选周期长、成本高，亟需计算模型高效筛选。</p>
+
+    <h3>1.2 FnBP作用基础机制</h3>
+    <p>FnBP含多组串联重复固有无序区（IDRs），结合纤连蛋白（Fn）后折叠为β-拉链结构，实现高稳定、高亲和力结合。</p>
+    <p>Fn结合FnBP后发生构象改变，暴露整合素结合位点，激活FAK、Src信号通路，诱导细胞骨架重排，依靠拉链式机制完成细菌入侵。</p>
+    <p>本模型限定与研究重点：固定Fn与肿瘤细胞整合素的相互作用不变，仅聚焦FnBP-Fn复合物，从进化亲缘、动态稳定性、结合亲和力多维度定量筛选最优FnBP。</p>
+
+    <h3>1.3 FnBP介导细菌侵袭肿瘤细胞完整分子机制</h3>
+    <ul>
+      <li><strong>锚定阶段（本模型研究靶点）</strong>：葡萄球菌表面FnBP特异性结合肿瘤胞外基质中的纤连蛋白Fn，是细菌定植肿瘤的第一步。</li>
+      <li><strong>分子桥构建</strong>：结合细菌的Fn通过C端RGD序列结合肿瘤细胞膜整合素α5β1，搭建细菌 - 胞外基质 - 细胞跨膜连接。</li>
+      <li><strong>胞内信号与内吞</strong>：整合素招募Talin、Kindlin蛋白，启动下游信号通路，肌动蛋白骨架重组，细胞膜包裹细菌完成入侵。</li>
+    </ul>
+    <img src="model图片/FnBP 介导细菌侵袭肿瘤细胞的完整分子机制.png" alt="FnBP介导细菌侵袭通路" class="img-single">
+    <div class="img-desc">图1 FnBP介导葡萄球菌侵袭肿瘤细胞完整通路示意图</div>
+
+    <h3>1.4 整体筛选逻辑</h3>
+    <ol>
+      <li><strong>进化评估</strong>：16S rRNA系统发育树，预判外源蛋白在工程菌中的表达可行性，缩减候选数量（模型亮点：前置粗筛降低计算成本）</li>
+      <li><strong>结构预测</strong>：AlphaFold-Multimer批量构建FnBP-Fn复合物三维结构，获得可信初始构象</li>
+      <li><strong>动态验证</strong>：1000 ns全原子分子动力学模拟，RMSD滑动平均分析，评估生理条件下复合物稳定性</li>
+      <li><strong>定量排序</strong>：MM/PBSA热力学计算，量化不同FnBP与Fn的结合自由能，直观对比亲和力强弱</li>
+      <li><strong>机制解析</strong>：残基接触统计、残基自由能分解，定位核心结合热点，阐释分子识别机制</li>
+    </ol>
+    <img src="model图片/分子分析过程.png" alt="完整计算分析流程" class="img-single">
+    <div class="img-desc">图2 全套FnBP筛选计算分析流程图</div>
+
+    <h2>二、系统发育分析（进化粗筛）</h2>
+    <h3>2.1 实验方法</h3>
+    <p>收集全部候选FnBP来源菌株与两株工程菌的16S rRNA序列。MEGA12软件序列比对，最大似然法（ML）构建进化树，同步生成遗传距离热图。</p>
+    <p>补充概念：16S rRNA为细菌分类分子钟；ML算法精准还原物种进化距离；工程菌表皮葡萄球菌、木糖葡萄球菌无内源FnBP。</p>
+
+    <img src="model图片/系统发育分析2.png" alt="16S rRNA系统发育树" class="img-single">
+    <div class="img-desc">图3 基于16S rRNA序列构建的物种系统发育树</div>
+
+    <img src="model图片/系统发育分析1.png" alt="遗传距离热图" class="img-single">
+    <div class="img-desc">图4 基于16S rRNA的物种遗传距离热图</div>
+
+    <h3>2.2 图表判读规则</h3>
+    <ul>
+      <li>系统发育树：分支越近，物种亲缘越近，进化差异越小；</li>
+      <li>遗传距离热图：颜色越黑/深紫→遗传距离越小（亲缘越近）；颜色越绿/蓝→遗传距离越大（亲缘越远）。</li>
+    </ul>
+
+    <h3>2.3 进化筛选结论</h3>
+    <p class="conclusion">金黄色葡萄球菌与工程底盘菌（表皮葡萄球菌、木糖葡萄球菌）同属葡萄球菌属，亲缘关系最近，遗传距离极小；链球菌属、李斯特菌与底盘菌亲缘较远。</p>
+    <p>金黄色葡萄球菌来源的FnBPA蛋白最有可能在工程菌中成功表达并保持完整功能，是最优外源侵袭蛋白候选来源。</p>
+
+    <h2>三、分子动力学（MD）模拟：复合物动态稳定性验证</h2>
+    <h3>3.1 AlphaFold-Multimer 初始结构预测</h3>
+    <p>输入各类FnBP与Fn氨基酸序列，批量预测FnBP-Fn蛋白复合物三维结构，筛选无空间位阻、与文献报道结构匹配的构象作为模拟初始模型。</p>
+
+    <h3>3.2 MD模拟体系与流程</h3>
+    <p>使用GROMACS软件开展1000 ns全原子分子动力学模拟，力场CHARMM36，水环境TIP3P，0.15 M NaCl模拟生理渗透压；完整流程：能量最小化→NVT恒温平衡→NPT恒压平衡→1000 ns长时生产模拟。</p>
+    <img src="model图片/分子动力学（MD）模拟.png" alt="MD模拟体系" class="img-single">
+    <div class="img-desc">图5 MD模拟立方水盒体系示意图：中间绿色为FnBP-Fn复合物，紫色为水分子，小球为Na⁺/Cl⁻离子</div>
+
+    <h3>3.3 RMSD滑动平均稳定性分析</h3>
+    <p><strong>指标说明</strong>：RMSD（均方根偏差）数值越低、曲线波动幅度越小，代表蛋白复合物构象越稳定；滑动平均消除瞬时震荡，直观体现长期稳定趋势。依据平滑后曲线截取无剧烈波动区间，作为MM/PBSA自由能计算输入轨迹。</p>
+    <h4>各蛋白RMSD曲线</h4>
+    <img src="model图片/FnBA.png" alt="FnBPA RMSD曲线" class="img-single">
+    <div class="img-desc">FnBPA-Fn复合物RMSD滑动平均曲线</div>
+
+    <img src="model图片/Sfbi滑动平均分析.png" alt="Sfbi RMSD曲线" class="img-single">
+    <div class="img-desc">Sfbi-Fn复合物RMSD滑动平均曲线</div>
+
+    <img src="model图片/FnEB滑动平均分析.png" alt="FnEB RMSD曲线" class="img-single">
+    <div class="img-desc">FnEB-Fn复合物RMSD滑动平均曲线</div>
+
+    <img src="model图片/FnZ滑动平均分析.png" alt="FnZ RMSD曲线" class="img-single">
+    <div class="img-desc">FnZ-Fn复合物RMSD滑动平均曲线</div>
+
+    <img src="model图片/FnBB滑动平均分析.png" alt="FnBB RMSD曲线" class="img-single">
+    <div class="img-desc">FnBB-Fn复合物RMSD滑动平均曲线</div>
+
+    <h4>各复合物稳定模拟区间汇总</h4>
+    <table>
+      <tr>
+        <th>FnBP复合物体系</th>
+        <th>稳定时间区间</th>
+      </tr>
+      <tr>
+        <td>Streptococcus pyogenes Sfbl type1</td>
+        <td>0–800 ns</td>
+      </tr>
+      <tr>
+        <td>Streptococcus pyogenes Sfbl type2</td>
+        <td>820–1000 ns</td>
+      </tr>
+      <tr>
+        <td>Streptococcus equi subsp. zooepidemicus FnZ type1</td>
+        <td>0–413.7 ns / 779.1–1000 ns</td>
+      </tr>
+      <tr>
+        <td>Streptococcus dysgalactiae FnBB</td>
+        <td>650–750 ns</td>
+      </tr>
+      <tr>
+        <td>Streptococcus equi subsp. equi FnEB</td>
+        <td>410–522 ns</td>
+      </tr>
+      <tr>
+        <td>Staphylococcus aureus FnBPA type1</td>
+        <td>0–77.91 ns</td>
+      </tr>
+      <tr>
+        <td>Staphylococcus aureus FnBPA type2</td>
+        <td>526.31–937.94 ns</td>
+      </tr>
+    </table>
+
+    <h4>稳定性初步分级</h4>
+    <table>
+      <tr>
+        <th>复合物</th>
+        <th>构象稳定性</th>
+        <th>初步筛选结果</th>
+      </tr>
+      <tr>
+        <td>FnBPA–Fn</td>
+        <td>中等</td>
+        <td>保留候选</td>
+      </tr>
+      <tr>
+        <td>SfbI–Fn</td>
+        <td>最高</td>
+        <td>备选</td>
+      </tr>
+      <tr>
+        <td>FnEB–Fn</td>
+        <td>中等</td>
+        <td>备选</td>
+      </tr>
+      <tr>
+        <td>FnBB–Fn</td>
+        <td>差</td>
+        <td>淘汰</td>
+      </tr>
+      <tr>
+        <td>FnZ–Fn</td>
+        <td>中等偏下</td>
+        <td>淘汰</td>
+      </tr>
+    </table>
+
+    <h2>四、MM/PBSA结合自由能定量亲和力排序</h2>
+    <h3>4.1 计算原理</h3>
+    <p>计算FnBP(配体)+Fn（受体）形成复合物释放的能量，ΔG数值越负，放热越多，蛋白结合亲和力越强、复合物越稳定。</p>
+    <p>Emm分子力学能=范德华力＋静电相互作用；Gsol溶剂化能=极性溶剂化能+非极性溶剂化能。</p>
+    <h3>4.2 核心作用</h3>
+    <ul>
+      <li>定量排序：直观对比各FnBP与Fn结合紧密程度；</li>
+      <li>残基能量分解：定位贡献结合力的关键氨基酸；</li>
+      <li>指导湿实验定点突变，验证分子互作机制。</li>
+    </ul>
+
+    <img src="model图片/蛋白质自由能.png" alt="各蛋白结合自由能对比" class="img-single">
+    <div class="img-desc">图6 五种FnBP-Fn复合物结合自由能ΔG对比柱状图</div>
+
+    <h3>4.3 亲和力筛选结果</h3>
+    <p class="conclusion">FnBPA结合自由能最负（-199.96 kcal/mol），亲和力最强；SfbI构象稳定性第一，但结合力弱于FnBPA；FnEB综合表现中等；FnBB、FnZ结合亲和力差，直接淘汰。后续分子互作分析仅聚焦FnBPA、SfbI、FnEB。</p>
+
+    <h2>五、残基相互作用与结合热点解析</h2>
+    <h3>5.1 残基接触热图分析</h3>
+    <p>色块颜色越深，对应两组氨基酸在模拟全程接触频率越高，为核心互作区域。</p>
+    <img src="model图片/残疾接触热分析1.png" alt="FnBPA接触热图" class="img-single">
+    <div class="img-desc">FnBPA与Fn残基接触矩阵热图</div>
+    <img src="model图片/残基接触热图分析2.png" alt="Sfbi接触热图" class="img-single">
+    <div class="img-desc">SfbI与Fn残基接触矩阵热图</div>
+    <img src="model图片/残基接触热图分析3.png" alt="FnEB接触热图" class="img-single">
+    <div class="img-desc">FnEB与Fn残基接触矩阵热图</div>
+
+    <h4>界面特征对比</h4>
+    <ul>
+      <li>FnBPA：高密度深色接触区块最多，整体结合界面最密集；</li>
+      <li>SfbI：深色条带连续均匀，界面分布规整，对应RMSD高稳定性；</li>
+      <li>FnEB：接触密度、均匀度均介于两者之间。</li>
+    </ul>
+    <p>统一规律：三类FnBP均优先结合Fn内部重复序列结构域，结合后无序多肽折叠为反平行β折叠，与文献报道的β拉链结合模式完全吻合。</p>
+
+    <h3>5.2 Fn分结构域接触定量统计</h3>
+    <p>将纤连蛋白拆分为FnI2、FnI3、FnI4、FnI5四个独立结构域，统计全部氨基酸总接触值，锁定结合热点区段。</p>
+    <img src="model图片/Fnl2.png" alt="FnI2接触值" class="img-single">
+    <img src="model图片/Fnl3.png" alt="FnI3接触值" class="img-single">
+    <img src="model图片/Fnl4.png" alt="FnI4接触值" class="img-single">
+    <img src="model图片/Fnl5.png" alt="FnI5接触值" class="img-single">
+    <p class="conclusion">FnI3、FnI4、FnI5结构域C端残基接触数值显著更高，是FnBP主要结合功能区；FnI2全段接触值极低，仅作为柔性连接链，几乎不参与FnBP相互作用。</p>
+
+    <h3>5.3 单残基结合自由能分解（关键热点鉴定）</h3>
+    <p>通过残基水平自由能分解，识别稳定复合物的核心氨基酸：Fn上大量ARG精氨酸残基提供强结合贡献，FnBP中ASP天冬氨酸、GLU谷氨酸、ARG、LYS赖氨酸为关键作用残基，依靠带电残基氢键与静电作用稳定复合物。</p>
+    <img src="model图片/氨基酸残基对结合自由能1.png" alt="FnBPA残基能量分解" class="img-single">
+    <div class="img-desc">FnBPA-Fn体系Top10关键残基结合自由能</div>
+    <img src="model图片/氨基酸残基对结合自由能2.png" alt="Sfbi残基能量分解" class="img-single">
+    <div class="img-desc">SfbI-Fn体系Top10关键残基结合自由能</div>
+    <img src="model图片/氨基酸残基对结合自由能3.png" alt="FnEB残基能量分解" class="img-single">
+    <div class="img-desc">FnEB-Fn体系Top10关键残基结合自由能</div>
+
+    <h3>5.4 三维对接互作可视化（FnBPA核心氢键）</h3>
+    <img src="model图片/3D连接图.png" alt="FnBPA-Fn氢键3D图" class="img-single">
+    <div class="img-desc">FnBPA与Fn核心氢键配对3D结构图；紫色=Fn，绿色=FnBPA</div>
+    <ul>
+      <li>Fn ARG179 ↔ FnBPA GLU12：氢键距离 1.7 Å、1.8 Å；</li>
+      <li>Fn ARG173 ↔ FnBPA ASP14：氢键距离 1.6 Å、2.5 Å；</li>
+    </ul>
+    <p>机制总结：短距离氢键与跨残基静电协同作用，是FnBPA与Fn高亲和力结合的微观基础。Fn的C端FnI3/4/5为核心结合区，正电ARG与FnBP负电ASP/GLU形成氢键、静电网络，支撑高强度结合。</p>
+
+    <h2>六、多维度综合筛选与最终结论</h2>
+    <h3>6.1 三重筛选评价维度</h3>
+    <ol>
+      <li><strong>进化亲缘层面</strong>：金黄色葡萄球菌与底盘工程菌（表皮葡萄球菌、木糖葡萄球菌）同属葡萄球菌属，遗传距离最近，FnBPA异源表达成功率、蛋白功能保守性最优。</li>
+      <li><strong>分子模拟热力学层面</strong>：FnBPA结合自由能−199.96 kcal/mol，全部候选中亲和力最强；SfbI构象稳定性第一，但结合能力不及FnBPA；FnEB综合表现中等；FnBB、FnZ稳定性、亲和力双差，直接淘汰。</li>
+      <li><strong>原子互作机制层面</strong>：FnBPA拥有数量最多的高贡献热点残基，依靠Fn正电ARG与自身负电ASP/GLU形成完整稳定氢键、静电网络，结合界面密集完整。</li>
+    </ol>
+
+    <h3>6.2 项目最终筛选结果</h3>
+    <p class="conclusion">综合进化适配性、生理动态稳定性、分子结合亲和力三重定量标准，<strong>FnBPA为本项目最优外源侵袭蛋白</strong>，可导入表皮葡萄球菌/木糖葡萄球菌底盘菌用于三阴性乳腺癌靶向侵袭递送。</p>
+
+    <h2>总结</h2>
+    <p class="conclusion">本套计算筛选体系通过进化粗筛、分子动力学动态验证、MM/PBSA定量亲和力、残基互作机制解析完整流程，快速完成多同源FnBP蛋白的高通量筛选，大幅降低纯湿实验时间与成本；建模结果为TroGen工程菌侵袭模块分子设计提供完整理论支撑，明确FnBPA最优表达策略，并完整阐释β拉链式细菌入侵分子基础，为后续蛋白定点改造、体内肿瘤靶向实验提供指导。</p>
+  </div>
+
+  <!-- 板块二：独立白色卡片 Model2 细胞内细菌扩散动力学 -->
+  <div class="card-container">
+    <h1>Model2：肿瘤细胞内细菌扩散动力学模拟</h1>
+
+    <h2>一、研究背景与模型定位</h2>
+    <h3>1.1 三阴性乳腺癌临床治疗瓶颈</h3>
+    <ul>
+      <li>TN缺乏ER、PR、HER2靶点，传统靶向药失效；化疗易耐药，免疫疗法缓解率极低；</li>
+      <li>TNBC侵袭性强、预后差、复发率高，亟需全新生物靶向治疗方案。</li>
+    </ul>
+    <h3>1.2 肿瘤胞内共生细菌天然优势</h3>
+    <p>特定革兰氏阳性共生菌可选择性富集于TNBC肿瘤细胞内部，躲避机体免疫清除，可改造为原位微型药物工厂，实现肿瘤精准给药。</p>
+    <h3>1.3 建模目标</h3>
+    <p>构建多尺度动力学数学模型，定量模拟改造后工程菌在肿瘤内扩散、迁移、增殖、消亡全过程；预测菌群时空分布，优化给药方案、指导菌株改造。</p>
+    <p>模型核心目标：模拟捕捉肿瘤细胞内细菌的空间迁移和种群动态。</p>
+
+    <h2>二、模型基础简化假设</h2>
+    <h3>2.1 运动简化假设</h3>
+    <ul>
+      <li>细菌运动拆分为：被动扩散（菲克定律）+间质液平流输运；</li>
+      <li>连续介质假设：细菌、养分视为连续浓度场，不追踪独立单个菌体。</li>
+    </ul>
+    <h3>2.2 微环境与生长简化假设</h3>
+    <ul>
+      <li>肿瘤组织、宿主免疫反应简化为静态背景，忽略双向反馈；</li>
+      <li>细菌生长仅依赖单一底物葡萄糖，同时引入种群密度抑制效应。</li>
+    </ul>
+
+    <h2>三、模型迭代开发全过程</h2>
+    <h3>3.1 迭代1：基础指数增长模型（初代框架）</h3>
+    <p>从质量守恒方程出发，通量拆分扩散项、对流项，源项采用指数生长 Rb=μb。</p>
+    <img src="model图片/迭代一方程.png" alt="迭代1质量守恒方程组" class="img-single">
+    <div class="img-desc">迭代1 指数增长基础偏微分方程组</div>
+    <h4>迭代1核心缺陷</h4>
+    <ul>
+      <li>无底物浓度对生长的抑制；</li>
+      <li>无环境容纳量，细菌浓度会无限爆炸增长；</li>
+      <li>忽略pH、代谢废物、营养匮乏的抑制作用，不符合真实生物学规律。</li>
+    </ul>
+
+    <h3>3.2 迭代2：耦合Monod-Logistic完整动力学（最终参考模型）</h3>
+    <p>耦合扩散-平流-生长偏微分方程组，同时引入养分依赖与种群密度双重抑制，解决指数模型无上限缺陷。</p>
+    <img src="model图片/迭代二方程.png" alt="细胞内细菌扩散完整PDE方程组" class="img-single">
+    <div class="img-desc">细胞内细菌扩散-对流-生长参考完整模型</div>
+    <h4>方程组核心机制解读</h4>
+    <ul>
+      <li><strong>Monod营养限制项 c/(Km+c)</strong>：米氏动力学，营养匮乏时生长速率趋近于0；</li>
+      <li><strong>Logistic密度制约项 (1−b/KB)</strong>：环境承载上限，细菌拥挤后增殖自动放缓；</li>
+      <li>底物方程与细菌生长完全耦合，通过产率系数量化葡萄糖消耗与菌群增殖关系。</li>
+    </ul>
+    <h4>模型框架应用价值</h4>
+    <ol>
+      <li>为同类细菌-肿瘤动力学建模提供标准化参考；</li>
+      <li>定量解析细菌入侵后胞内时空演化规律；</li>
+      <li>预留拓展接口，可耦合pH、溶氧、群体感应模块持续优化。</li>
+    </ol>
+
+    <h2>四、COMSOL数值模拟体系搭建</h2>
+    <h3>4.1 几何、初始条件与仿真时长</h3>
+    <ul>
+      <li>三维球形肿瘤模型，半径0.005 cm；</li>
+      <li>初始细菌仅分布球体边界：B₀=3.17×10⁻¹¹ mol/m³，模拟外源侵染；</li>
+      <li>葡萄糖底物球内均匀分布：C₀=2 mol/m³；</li>
+      <li>总仿真时长6 h，与体外实验观测窗口匹配，方便数据对照验证。</li>
+    </ul>
+    <h3>4.2 全套仿真参数表</h3>
+    <img src="model图片/参考数据.png" alt="COMSOL仿真全部动力学参数" class="img-single">
+    <div class="img-desc">模型全部动力学、输运参数及生物学释义</div>
+
+    <h2>五、仿真结果可视化与定量分析</h2>
+    <h3>5.1 径向浓度剖面（0~6h时空演化）</h3>
+    <img src="model图片/剖面分析.png" alt="不同时间细菌径向分布曲线" class="img-single">
+    <div class="img-desc">细菌浓度沿肿瘤半径分布时序曲线</div>
+    <ul>
+      <li>0h：细菌仅聚集肿瘤外缘，球心浓度极低；</li>
+      <li>随模拟时间推移曲线持续向内延伸，球心浓度逐步上升；</li>
+      <li>扩散+增殖形成正向反馈，最终全域浓度趋于稳定平台。</li>
+    </ul>
+
+    <h3>5.2 二维横截面时序热力云图</h3>
+    <img src="model图片/热力图4.png" alt="0至6小时肿瘤yz截面细菌分布" class="img-single">
+    <div class="img-desc">Time0~6h 肿瘤横截面细菌浓度热力图，黄色=高浓度，蓝紫色=低浓度</div>
+    <p>核心特征：细菌呈波浪式从外向内推进；0~4h高浓度黄色区域持续向球心扩张；5~6h云图分布几乎无变化，增殖、消耗、扩散达到动态准稳态。</p>
+
+    <h3>5.3 时序定量浓度曲线（模拟vs实验对照）</h3>
+    <img src="model图片/细菌入侵随时间的定量分析（COMSOL）.png" alt="数值仿真S型增长曲线" class="img-single">
+    <div class="img-desc">COMSOL仿真：肿瘤内细菌平均浓度随时间变化</div>
+    <img src="model图片/细菌入侵随时间的定量分析（实验）.png" alt="湿实验实测浓度曲线" class="img-single">
+    <div class="img-desc">体外细胞实验实测细菌浓度时序数据</div>
+    <h4>模拟与实验对比结论</h4>
+    <ul>
+      <li>整体增长趋势高度吻合：初期快速增殖，增速持续放缓，最终趋向稳态；</li>
+      <li>偏差来源：模型简化，未纳入pH、溶氧、代谢废物抑制，仿真稳态浓度略高于体外实验，平台期更早出现。</li>
+    </ul>
+
+    <h2>六、模型局限性与未来迭代优化方向</h2>
+    <h3>6.1 当前模型短板</h3>
+    <ol>
+      <li>仅单一葡萄糖作为碳源，忽略氨基酸、维生素多营养协同作用；</li>
+      <li>未耦合pH、溶氧、乳酸代谢废物动态抑制项；</li>
+      <li>肿瘤、免疫、细菌静态假设，缺少双向动态反馈耦合；</li>
+      <li>未整合群体感应、生物膜形成等微生物微观行为。</li>
+    </ol>
+    <h3>6.2 后续升级思路</h3>
+    <ul>
+      <li>拓展多底物耦合Monod动力学方程组；</li>
+      <li>新增pH、氧气浓度动态偏微分方程，双向调控细菌生长速率；</li>
+      <li>整合群体感应、胞外基质降解模块，提升体内微环境预测精度；</li>
+      <li>耦合免疫细胞清除项，更贴合真实体内肿瘤微环境。</li>
+    </ul>
+
+    <h3>Model2总结</h3>
+    <p class="conclusion">本扩散动力学模型完整还原工程菌侵入肿瘤后的迁移增殖全过程，COMSOL仿真直观证明细菌可从外缘持续渗透至肿瘤核心；Monod+Logistic双重约束解决无上限增殖缺陷，仿真趋势与体外实验匹配，为给药剂量、给药间隔、菌株改造提供可量化理论预测工具。</p>
+  </div>
+</div>
+
+<!-- 阅读进度指示器 -->
+<div class="progress-capsule" id="progressCapsule" aria-label="阅读进度">
+  <div class="progress-fill" id="progressFill"></div>
+  <span class="progress-text" id="progressText">0%</span>
+</div>
+
+<script>
+  (function() {
+    const fill = document.getElementById('progressFill');
+    const text = document.getElementById('progressText');
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) {
+        text.textContent = '100%';
+        fill.style.height = '100%';
+        return;
+      }
+      const percent = Math.min(Math.round((scrollTop / docHeight) * 100), 100);
+      text.textContent = percent + '%';
+      fill.style.height = percent + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();
+</script>
+
+</body>
+</html>

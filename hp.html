@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TroGen - Human Practices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@1&family=Noto+Serif+SC:wght@300;400;700;900&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #d68a8b;
+      --cream: #f5f1e8;
+      --ink: #050505;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--cream);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "Noto Serif SC", SimSun, serif;
+      overflow-x: hidden;
+    }
+
+    /* ===== 导航栏（与首页完全一致） ===== */
+    .navbar {
+      width: 100%;
+      max-width: 1260px;
+      margin: 37px auto 0;
+      height: 72px;
+      border-bottom: 1px solid rgba(0, 0, 0, .72);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      padding: 0 10px;
+    }
+
+    .brand {
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      font-size: 28px;
+      line-height: 28px;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 62px;
+      align-items: center;
+      height: 34px;
+      font-size: 24px;
+      line-height: 34px;
+    }
+
+    .nav-link {
+      position: relative;
+      z-index: 0;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: -1;
+      width: 86px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(120, 120, 120, .22);
+      filter: blur(8px);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(.75);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--pink);
+    }
+
+    .nav-link:hover::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ===== 内容容器 ===== */
+    .content-wrapper {
+      max-width: 1260px;
+      margin: 20px auto 80px;
+      padding: 0 10px;
+    }
+
+    .container {
+      background: #fff;
+      padding: 50px;
+      border-radius: 12px;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 40px;
+      color: var(--ink);
+      font-family: "ZCOOL QingKe HuangYou", "Noto Serif SC", serif;
+      letter-spacing: 2px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: var(--pink);
+      margin-top: 40px;
+      margin-bottom: 20px;
+      border-left: 3px solid var(--pink);
+      padding-left: 12px;
+    }
+
+    h3 {
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: var(--ink);
+    }
+
+    p, li {
+      font-size: 16px;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    ul {
+      padding-left: 25px;
+    }
+
+    .conclusion {
+      font-weight: bold;
+      color: var(--ink);
+      margin-top: 15px;
+    }
+
+    /* ===== 阅读进度指示器（与首页一致） ===== */
+    .progress-capsule {
+      position: fixed;
+      bottom: 36px;
+      right: 36px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 40px;
+      border-radius: 20px;
+      background: var(--pink);
+      cursor: default;
+      transition: width 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(214, 138, 139, 0.3);
+      overflow: hidden;
+    }
+
+    .progress-capsule:hover {
+      width: 80px;
+      height: 40px;
+      box-shadow: 0 4px 16px rgba(214, 138, 139, 0.4);
+    }
+
+    .progress-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      transition: height 0.15s linear;
+    }
+
+    .progress-text {
+      position: relative;
+      z-index: 1;
+      font-family: "Noto Serif SC", SimSun, serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      user-select: none;
+      line-height: 1;
+    }
+
+    .progress-capsule:hover .progress-text {
+      opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 15px;
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+      .brand {
+        font-size: 22px;
+      }
+      .nav-links {
+        gap: 20px;
+        font-size: 16px;
+        flex-wrap: wrap;
+      }
+      .content-wrapper {
+        padding: 0 15px;
+      }
+      .container {
+        padding: 25px;
+      }
+      .progress-capsule {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 导航栏 -->
+<nav class="navbar" aria-label="TroGen navigation">
+  <div class="brand">第二组 · TroGen项目学习</div>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">首页</a>
+    <a class="nav-link" href="wet.html">Wet</a>
+    <a class="nav-link" href="model.html">Model</a>
+    <a class="nav-link" href="art.html">Art</a>
+    <a class="nav-link" href="hp.html">HP</a>
+  </div>
+</nav>
+
+<!-- 完整内容 -->
+<div class="content-wrapper">
+  <div class="container">
+    <h1>Human Practices 整合式人类实践(IHP)</h1>
+
+    <h2>一、项目科研与社会核心背景</h2>
+    <p>本项目依托合成生物学搭建精准肿瘤药物递送平台，靶向解决三阴性乳腺癌（TNBC）临床痛点：现有治疗疗效有限、治疗周期长、毒副作用强，严重降低患者生活质量。项目落地过程中需直面三大核心难题：</p>
+    <ul>
+      <li><strong>社会层面</strong>：大众对合成生物学、工程菌技术普遍存在误解与恐惧，整体社会接受度偏低；</li>
+      <li><strong>临床层面</strong>：传统化疗副作用剧烈、疗效维持时间短，临床亟需温和、可控的新型治疗方案；</li>
+      <li><strong>技术层面</strong>：工程菌生物安全、环境释放风险、临床转化可行性存在多重待验证问题。</li>
+    </ul>
+    <p>我们以整合式人类实践（IHP）为核心方法论，构建「社会调研-多方反馈-科研迭代」动态闭环，将社会需求全程嵌入科研全流程。</p>
+
+    <h2>二、全维度利益相关方联动</h2>
+    <p>我们系统性对接全部相关群体，持续收集反馈并反向优化药物递送平台，保障技术精准度、安全性与疗效贴合患者真实诉求，覆盖全部核心参与主体：</p>
+    <ul>
+      <li><strong>临床端</strong>：太和医院罗明博士、多所医院临床医师、三阴性乳腺癌患者群体；</li>
+      <li><strong>科研端</strong>：青岛生物能源所张海波教授、王磊研究员、兰州大学唐建明教授、校内朱永涛、刘丽娟等多位博士；</li>
+      <li><strong>竞赛同行</strong>：益业、CJUH-JLU、XJU、Sustech-Med等8支国内外iGEM参赛队伍；</li>
+      <li><strong>社会大众</strong>：中小学生、高中生、中年群体、社区老年居民。</li>
+    </ul>
+    <p>本次项目累计对接32位跨领域专家，覆盖4所学院、2所科研机构、4所医院、8支iGEM团队与线下社区，形成完整多元反馈网络。</p>
+
+    <h2>三、科研迭代：干湿实验专家指导优化</h2>
+    <h3>1. 湿实验迭代指导</h3>
+    <ul>
+      <li>朱永涛博士：搭建团队架构、无偿提供稀缺菌株、抗生素与关键试剂，线下规范实验操作；</li>
+      <li>刘丽娟博士：推荐一步克隆环化技术，大幅提升质粒构建效率与成功率；</li>
+      <li>陆紫阳先生：紧急调配捐赠实验耗材、抗生素，提供持续技术点拨与团队支持。</li>
+    </ul>
+    <h3>2. 干实验计算模拟优化</h3>
+    <ul>
+      <li>谢子文先生：简化迭代阶段、删减冗余检查点，提前预判潜在实验陷阱；</li>
+      <li>凯文教授：采用轨迹PBC标准化预处理修复模拟数据，使用AlphaFold3并引入锰离子完成蛋白结构重算验证。</li>
+    </ul>
+    <h3>3. 跨团队研讨与安全方案优化</h3>
+    <ul>
+      <li>联合多支iGEM队伍开展CCIC深度研讨，论证药物递送技术路线、临床转化路径与伦理规范；</li>
+      <li>能源所专家指导拓展适配药物载体、探索联合治疗新思路；</li>
+      <li>临床与高校专家针对免疫反应、感染风险给出优化方案，确立<strong>安全性验证前置至动物实验阶段</strong>核心策略。</li>
+    </ul>
+
+    <h2>四、分层全覆盖公众科普教育</h2>
+    <p>打破实验室与大众壁垒，针对不同年龄、认知水平群体定制专属科普模块，依托问卷调研掌握受众知识短板，动态调整课件、实验与视觉物料，形成教育闭环。</p>
+    <h3>1. 青少年分阶科普</h3>
+    <ul>
+      <li><strong>阅读俱乐部</strong>：初始直接讲解文本学生难以理解，经张海荣老师建议，前置iGEM与项目背景铺垫，人文与合成生物学深度结合，伦理讨论深度与课堂参与度显著提升；</li>
+      <li><strong>初中课堂</strong>：原纯问答模式知识零散，方云老师建议增加结构化逻辑讲解，兼顾互动趣味性与知识体系完整性；</li>
+      <li><strong>高中暑期实验课</strong>：仅动手无理论导致浅层学习，朱永涛老师搭建「假设-实操-总结」闭环，培养学生科学探究思维。</li>
+    </ul>
+    <h3>2. 中老年关怀式科普</h3>
+    <p>采用温和提醒式教育，尊重原有生活认知，潜移默化传递健康理念：</p>
+    <ul>
+      <li>中年群体：依托师生羽毛球赛事，在休闲场景传递「预防优于治疗」健康观念；</li>
+      <li>老年社区：云南线下社区调研+小额激励，巩固科学健康生活习惯，减少大众对癌症、基因技术的恐慌。</li>
+    </ul>
+    <h3>3. 跨队伍联合科普成果</h3>
+    <p>深度参与CJUH-JLU-China全球联合行动，联合多支iGEM队伍编撰科普手册，用真实医疗、环境案例拆解合成生物学谣言误区，系统性提升全社会认知与技术接受度。</p>
+
+    <h2>五、本项目Human Practices核心亮点</h2>
+    <ul>
+      <li>1. 跨界交流覆盖面广：联动32位跨领域专家，打通高校、科研院所、医院、竞赛、社区多场景；</li>
+      <li>2. 科普受众分层完整：覆盖中小学生、高中生、中年、老年全年龄段社会群体；</li>
+      <li>3. 闭环迭代机制成熟：依据受众问卷、访谈反馈持续修订讲座、实验教具与宣传物料；</li>
+      <li>4. 高度个性化科普：通过前置问卷精准定位不同人群癌症、合成生物学知识盲区，定制专属内容；</li>
+      <li>5. 全球协同科普产出：联合多支iGEM团队共创科普手册，系统消解公众技术误解。</li>
+    </ul>
+
+    <h2>六、项目复盘：现存不足与未来改进方向</h2>
+    <ul>
+      <li>1. 缺少量化评估体系：后续将增设标准化问卷、访谈评分指标，定量测算科普活动成效、公众对合成生物学接受度变化；</li>
+      <li>2. 患者群体调研深度不足：未来增加长期一对一患者访谈，深挖临床真实痛点与心理顾虑；</li>
+      <li>3. 伦理、生物安全讨论碎片化：下一阶段将设立独立专题，系统梳理工程菌释放、人体试验相关伦理规范；</li>
+      <li>4. 科普课程文字内容冗长：后续精简课件文本，多用图示、简易实验降低理解门槛；</li>
+      <li>5. Wiki页面文字严谨度仍可优化：统一专业术语，校对全文用字用词，提升页面规范性。</li>
+    </ul>
+
+    <h2>七、总结与展望</h2>
+    <p class="conclusion">整合式人类实践（IHP）贯穿TroGen药物递送平台研发全流程，让合成生物学研究不止局限于实验室数据，而是真正回应三阴性乳腺癌患者的临床需求、回应大众对生物新技术的安全顾虑。未来我们将完善量化评估体系、深化患者与伦理专题研究，持续开展分层科普，推动合成生物学医疗技术安全、透明、负责任地走向临床与大众。</p>
+  </div>
+</div>
+
+<!-- 阅读进度指示器 -->
+<div class="progress-capsule" id="progressCapsule" aria-label="阅读进度">
+  <div class="progress-fill" id="progressFill"></div>
+  <span class="progress-text" id="progressText">0%</span>
+</div>
+
+<script>
+  (function() {
+    const fill = document.getElementById('progressFill');
+    const text = document.getElementById('progressText');
+
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) {
+        text.textContent = '100%';
+        fill.style.height = '100%';
+        return;
+      }
+      const percent = Math.min(Math.round((scrollTop / docHeight) * 100), 100);
+      text.textContent = percent + '%';
+      fill.style.height = percent + '%';
+    }
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  })();
+</script>
+
+</body>
+</html>
