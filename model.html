@@ -325,7 +325,7 @@
       <li><strong>分子桥构建</strong>：结合细菌的Fn通过C端RGD序列结合肿瘤细胞膜整合素α5β1，搭建细菌 - 胞外基质 - 细胞跨膜连接。</li>
       <li><strong>胞内信号与内吞</strong>：整合素招募Talin、Kindlin蛋白，启动下游信号通路，肌动蛋白骨架重组，细胞膜包裹细菌完成入侵。</li>
     </ul>
-    <img src="model图片/FnBP 介导细菌侵袭肿瘤细胞的完整分子机制.png" alt="FnBP介导细菌侵袭通路" class="img-single">
+    <img src="model/FnBP 介导细菌侵袭肿瘤细胞的完整分子机制.png" alt="FnBP介导细菌侵袭通路" class="img-single">
     <div class="img-desc">图1 FnBP介导葡萄球菌侵袭肿瘤细胞完整通路示意图</div>
 
     <h3>1.4 整体筛选逻辑</h3>
@@ -336,7 +336,7 @@
       <li><strong>定量排序</strong>：MM/PBSA热力学计算，量化不同FnBP与Fn的结合自由能，直观对比亲和力强弱</li>
       <li><strong>机制解析</strong>：残基接触统计、残基自由能分解，定位核心结合热点，阐释分子识别机制</li>
     </ol>
-    <img src="model图片/分子分析过程.png" alt="完整计算分析流程" class="img-single">
+    <img src="model/分子分析过程.png" alt="完整计算分析流程" class="img-single">
     <div class="img-desc">图2 全套FnBP筛选计算分析流程图</div>
 
     <h2>二、系统发育分析（进化粗筛）</h2>
@@ -344,10 +344,10 @@
     <p>收集全部候选FnBP来源菌株与两株工程菌的16S rRNA序列。MEGA12软件序列比对，最大似然法（ML）构建进化树，同步生成遗传距离热图。</p>
     <p>补充概念：16S rRNA为细菌分类分子钟；ML算法精准还原物种进化距离；工程菌表皮葡萄球菌、木糖葡萄球菌无内源FnBP。</p>
 
-    <img src="model图片/系统发育分析2.png" alt="16S rRNA系统发育树" class="img-single">
+    <img src="model/系统发育分析2.png" alt="16S rRNA系统发育树" class="img-single">
     <div class="img-desc">图3 基于16S rRNA序列构建的物种系统发育树</div>
 
-    <img src="model图片/系统发育分析1.png" alt="遗传距离热图" class="img-single">
+    <img src="model/系统发育分析1.png" alt="遗传距离热图" class="img-single">
     <div class="img-desc">图4 基于16S rRNA的物种遗传距离热图</div>
 
     <h3>2.2 图表判读规则</h3>
@@ -366,25 +366,25 @@
 
     <h3>3.2 MD模拟体系与流程</h3>
     <p>使用GROMACS软件开展1000 ns全原子分子动力学模拟，力场CHARMM36，水环境TIP3P，0.15 M NaCl模拟生理渗透压；完整流程：能量最小化→NVT恒温平衡→NPT恒压平衡→1000 ns长时生产模拟。</p>
-    <img src="model图片/分子动力学（MD）模拟.png" alt="MD模拟体系" class="img-single">
+    <img src="model/分子动力学（MD）模拟.png" alt="MD模拟体系" class="img-single">
     <div class="img-desc">图5 MD模拟立方水盒体系示意图：中间绿色为FnBP-Fn复合物，紫色为水分子，小球为Na⁺/Cl⁻离子</div>
 
     <h3>3.3 RMSD滑动平均稳定性分析</h3>
     <p><strong>指标说明</strong>：RMSD（均方根偏差）数值越低、曲线波动幅度越小，代表蛋白复合物构象越稳定；滑动平均消除瞬时震荡，直观体现长期稳定趋势。依据平滑后曲线截取无剧烈波动区间，作为MM/PBSA自由能计算输入轨迹。</p>
     <h4>各蛋白RMSD曲线</h4>
-    <img src="model图片/FnBA.png" alt="FnBPA RMSD曲线" class="img-single">
+    <img src="model/FnBA.png" alt="FnBPA RMSD曲线" class="img-single">
     <div class="img-desc">FnBPA-Fn复合物RMSD滑动平均曲线</div>
 
-    <img src="model图片/Sfbi滑动平均分析.png" alt="Sfbi RMSD曲线" class="img-single">
+    <img src="model/Sfbi滑动平均分析.png" alt="Sfbi RMSD曲线" class="img-single">
     <div class="img-desc">Sfbi-Fn复合物RMSD滑动平均曲线</div>
 
-    <img src="model图片/FnEB滑动平均分析.png" alt="FnEB RMSD曲线" class="img-single">
+    <img src="model/FnEB滑动平均分析.png" alt="FnEB RMSD曲线" class="img-single">
     <div class="img-desc">FnEB-Fn复合物RMSD滑动平均曲线</div>
 
-    <img src="model图片/FnZ滑动平均分析.png" alt="FnZ RMSD曲线" class="img-single">
+    <img src="model/FnZ滑动平均分析.png" alt="FnZ RMSD曲线" class="img-single">
     <div class="img-desc">FnZ-Fn复合物RMSD滑动平均曲线</div>
 
-    <img src="model图片/FnBB滑动平均分析.png" alt="FnBB RMSD曲线" class="img-single">
+    <img src="model/FnBB滑动平均分析.png" alt="FnBB RMSD曲线" class="img-single">
     <div class="img-desc">FnBB-Fn复合物RMSD滑动平均曲线</div>
 
     <h4>各复合物稳定模拟区间汇总</h4>
@@ -468,7 +468,7 @@
       <li>指导湿实验定点突变，验证分子互作机制。</li>
     </ul>
 
-    <img src="model图片/蛋白质自由能.png" alt="各蛋白结合自由能对比" class="img-single">
+    <img src="model/蛋白质自由能.png" alt="各蛋白结合自由能对比" class="img-single">
     <div class="img-desc">图6 五种FnBP-Fn复合物结合自由能ΔG对比柱状图</div>
 
     <h3>4.3 亲和力筛选结果</h3>
@@ -477,11 +477,11 @@
     <h2>五、残基相互作用与结合热点解析</h2>
     <h3>5.1 残基接触热图分析</h3>
     <p>色块颜色越深，对应两组氨基酸在模拟全程接触频率越高，为核心互作区域。</p>
-    <img src="model图片/残疾接触热分析1.png" alt="FnBPA接触热图" class="img-single">
+    <img src="model/残疾接触热分析1.png" alt="FnBPA接触热图" class="img-single">
     <div class="img-desc">FnBPA与Fn残基接触矩阵热图</div>
-    <img src="model图片/残基接触热图分析2.png" alt="Sfbi接触热图" class="img-single">
+    <img src="model/残基接触热图分析2.png" alt="Sfbi接触热图" class="img-single">
     <div class="img-desc">SfbI与Fn残基接触矩阵热图</div>
-    <img src="model图片/残基接触热图分析3.png" alt="FnEB接触热图" class="img-single">
+    <img src="model/残基接触热图分析3.png" alt="FnEB接触热图" class="img-single">
     <div class="img-desc">FnEB与Fn残基接触矩阵热图</div>
 
     <h4>界面特征对比</h4>
@@ -494,23 +494,23 @@
 
     <h3>5.2 Fn分结构域接触定量统计</h3>
     <p>将纤连蛋白拆分为FnI2、FnI3、FnI4、FnI5四个独立结构域，统计全部氨基酸总接触值，锁定结合热点区段。</p>
-    <img src="model图片/Fnl2.png" alt="FnI2接触值" class="img-single">
-    <img src="model图片/Fnl3.png" alt="FnI3接触值" class="img-single">
-    <img src="model图片/Fnl4.png" alt="FnI4接触值" class="img-single">
-    <img src="model图片/Fnl5.png" alt="FnI5接触值" class="img-single">
+    <img src="model/Fnl2.png" alt="FnI2接触值" class="img-single">
+    <img src="model/Fnl3.png" alt="FnI3接触值" class="img-single">
+    <img src="model/Fnl4.png" alt="FnI4接触值" class="img-single">
+    <img src="model/Fnl5.png" alt="FnI5接触值" class="img-single">
     <p class="conclusion">FnI3、FnI4、FnI5结构域C端残基接触数值显著更高，是FnBP主要结合功能区；FnI2全段接触值极低，仅作为柔性连接链，几乎不参与FnBP相互作用。</p>
 
     <h3>5.3 单残基结合自由能分解（关键热点鉴定）</h3>
     <p>通过残基水平自由能分解，识别稳定复合物的核心氨基酸：Fn上大量ARG精氨酸残基提供强结合贡献，FnBP中ASP天冬氨酸、GLU谷氨酸、ARG、LYS赖氨酸为关键作用残基，依靠带电残基氢键与静电作用稳定复合物。</p>
-    <img src="model图片/氨基酸残基对结合自由能1.png" alt="FnBPA残基能量分解" class="img-single">
+    <img src="model/氨基酸残基对结合自由能1.png" alt="FnBPA残基能量分解" class="img-single">
     <div class="img-desc">FnBPA-Fn体系Top10关键残基结合自由能</div>
-    <img src="model图片/氨基酸残基对结合自由能2.png" alt="Sfbi残基能量分解" class="img-single">
+    <img src="model/氨基酸残基对结合自由能2.png" alt="Sfbi残基能量分解" class="img-single">
     <div class="img-desc">SfbI-Fn体系Top10关键残基结合自由能</div>
-    <img src="model图片/氨基酸残基对结合自由能3.png" alt="FnEB残基能量分解" class="img-single">
+    <img src="model/氨基酸残基对结合自由能3.png" alt="FnEB残基能量分解" class="img-single">
     <div class="img-desc">FnEB-Fn体系Top10关键残基结合自由能</div>
 
     <h3>5.4 三维对接互作可视化（FnBPA核心氢键）</h3>
-    <img src="model图片/3D连接图.png" alt="FnBPA-Fn氢键3D图" class="img-single">
+    <img src="model/3D连接图.png" alt="FnBPA-Fn氢键3D图" class="img-single">
     <div class="img-desc">FnBPA与Fn核心氢键配对3D结构图；紫色=Fn，绿色=FnBPA</div>
     <ul>
       <li>Fn ARG179 ↔ FnBPA GLU12：氢键距离 1.7 Å、1.8 Å；</li>
@@ -564,7 +564,7 @@
     <h2>三、模型迭代开发全过程</h2>
     <h3>3.1 迭代1：基础指数增长模型（初代框架）</h3>
     <p>从质量守恒方程出发，通量拆分扩散项、对流项，源项采用指数生长 Rb=μb。</p>
-    <img src="model图片/迭代一方程.png" alt="迭代1质量守恒方程组" class="img-single">
+    <img src="model/迭代一方程.png" alt="迭代1质量守恒方程组" class="img-single">
     <div class="img-desc">迭代1 指数增长基础偏微分方程组</div>
     <h4>迭代1核心缺陷</h4>
     <ul>
@@ -575,7 +575,7 @@
 
     <h3>3.2 迭代2：耦合Monod-Logistic完整动力学（最终参考模型）</h3>
     <p>耦合扩散-平流-生长偏微分方程组，同时引入养分依赖与种群密度双重抑制，解决指数模型无上限缺陷。</p>
-    <img src="model图片/迭代二方程.png" alt="细胞内细菌扩散完整PDE方程组" class="img-single">
+    <img src="model/迭代二方程.png" alt="细胞内细菌扩散完整PDE方程组" class="img-single">
     <div class="img-desc">细胞内细菌扩散-对流-生长参考完整模型</div>
     <h4>方程组核心机制解读</h4>
     <ul>
@@ -599,12 +599,12 @@
       <li>总仿真时长6 h，与体外实验观测窗口匹配，方便数据对照验证。</li>
     </ul>
     <h3>4.2 全套仿真参数表</h3>
-    <img src="model图片/参考数据.png" alt="COMSOL仿真全部动力学参数" class="img-single">
+    <img src="model/参考数据.png" alt="COMSOL仿真全部动力学参数" class="img-single">
     <div class="img-desc">模型全部动力学、输运参数及生物学释义</div>
 
     <h2>五、仿真结果可视化与定量分析</h2>
     <h3>5.1 径向浓度剖面（0~6h时空演化）</h3>
-    <img src="model图片/剖面分析.png" alt="不同时间细菌径向分布曲线" class="img-single">
+    <img src="model/剖面分析.png" alt="不同时间细菌径向分布曲线" class="img-single">
     <div class="img-desc">细菌浓度沿肿瘤半径分布时序曲线</div>
     <ul>
       <li>0h：细菌仅聚集肿瘤外缘，球心浓度极低；</li>
@@ -613,14 +613,14 @@
     </ul>
 
     <h3>5.2 二维横截面时序热力云图</h3>
-    <img src="model图片/热力图4.png" alt="0至6小时肿瘤yz截面细菌分布" class="img-single">
+    <img src="model/热力图4.png" alt="0至6小时肿瘤yz截面细菌分布" class="img-single">
     <div class="img-desc">Time0~6h 肿瘤横截面细菌浓度热力图，黄色=高浓度，蓝紫色=低浓度</div>
     <p>核心特征：细菌呈波浪式从外向内推进；0~4h高浓度黄色区域持续向球心扩张；5~6h云图分布几乎无变化，增殖、消耗、扩散达到动态准稳态。</p>
 
     <h3>5.3 时序定量浓度曲线（模拟vs实验对照）</h3>
-    <img src="model图片/细菌入侵随时间的定量分析（COMSOL）.png" alt="数值仿真S型增长曲线" class="img-single">
+    <img src="model/细菌入侵随时间的定量分析（COMSOL）.png" alt="数值仿真S型增长曲线" class="img-single">
     <div class="img-desc">COMSOL仿真：肿瘤内细菌平均浓度随时间变化</div>
-    <img src="model图片/细菌入侵随时间的定量分析（实验）.png" alt="湿实验实测浓度曲线" class="img-single">
+    <img src="model/细菌入侵随时间的定量分析（实验）.png" alt="湿实验实测浓度曲线" class="img-single">
     <div class="img-desc">体外细胞实验实测细菌浓度时序数据</div>
     <h4>模拟与实验对比结论</h4>
     <ul>
